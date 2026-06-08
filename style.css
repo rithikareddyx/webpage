@@ -1,6 +1,6 @@
 
         nav{
-            background-color: black;
+            background-color: rgb(14, 73, 110);
             padding: 10px;
         }
         nav a{
@@ -51,7 +51,7 @@
             cursor: pointer;
         }
         button:hover{
-            background-color: powderblue;
+         background-color: rgb(14, 73, 110);
         }
         table{
             width: 100%;
@@ -67,3 +67,15 @@
         table th{
             background-color: #f2f2f2;
         }
+        .actions{
+    display:flex;
+    gap:10px;
+    justify-content:center;
+    align-items:center;
+}
+
+.actions button{
+    width:auto;
+    padding:8px 16px;
+    cursor:pointer;
+}
