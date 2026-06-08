@@ -13,12 +13,25 @@
         <a href="view.html">view-students</a>
         <a href="logout.html">logout</a>
     </nav><br/><br/>
-    <form action="view.html">
-        Name : <input type="text" required minlength="3"><br/><br/>
-        Roll Number : <input type="text" required minlength="10" maxlength="10"><br/><br/>
-        CGPA : <input type="text"  required maxlength="3" ><br/><br/>
-        Branch : <input type="text"  required minlength="3"><br/><br/>
-        <button type="submit">Add Student</button>
-    </form>
+    <form action="view.html" onsubmit="validate()">
+    Name : <input type="text" name="name" required minlength="3"><br><br>
+    Roll Number : <input type="text" name="roll_number" required minlength="10" maxlength="10"><br><br>
+    CGPA :<input type="text" name="cgpa" required maxlength="3"><br><br>
+    Branch :<input type="text" name="branch" required minlength="3"><br><br>
+    <button type="submit">Add Student</button>
+</form>
 </body>
+<script>
+    function validate() {
+        const form = document.querySelector('form');
+        const name = form.name.value;
+        const rollNumber = form.roll_number.value;
+        const cgpa = form.cgpa.value;
+        const branch = form.branch.value;
+        const student = { name, rollNumber, cgpa, branch };
+        let students = JSON.parse(localStorage.getItem("students")) || [];
+        students.push(student);
+        localStorage.setItem("students", JSON.stringify(students));
+    }
+</script>
 </html>

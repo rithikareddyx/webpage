@@ -12,13 +12,30 @@
         <a href="login.html">Login</a>
         <a href="register.html">Register</a>
     </nav><br/><br/>
-    <form action="login.html">
+    <form action="login.html" onsubmit="validateForm()">
         Username : <input type ="text" name="username" required minlength="4" maxlength="12"><br/><br/>
         Email : <input type="email" name="email" required minlength="5"><br/><br/>
         Password : <input type="password" name="password" required minlength="4" maxlength="12"><br/><br/>
         Confirm Password : <input type="password" name="confirm_password" required minlength="4" maxlength="12"><br/><br/>
-
         <button type="submit">Register</button>
     </form>
 </body>
+<script>
+    function validateForm() {
+        const form = document.querySelector('form');
+        const password = form.password.value;
+        const confirmPassword = form.confirm_password.value;
+        if (password !== confirmPassword) {
+            alert('Passwords do not match!');
+            return;
+        }
+        alert('Registration successful!');
+        const user={
+            username: form.username.value,
+            email: form.email.value,
+            password: form.password.value
+        }
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+</script>
 </html>

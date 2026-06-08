@@ -15,48 +15,49 @@
     </nav><br/><br/>
     <h1>Students List</h1>
     <table>
-        <tr>
-            <th>Name</th>
-            <th>Roll Number</th>
-            <th>CGPA</th>
-            <th>Branch</th>
-            <th>Actions</th>
-        </tr>
-        <tr>
-            <td>John</td>
-            <td>12345</td>
-            <td>8.5</td>
-            <td>Computer Science</td>
-            <td> <a href="edit.html"> <button>Edit</button> </a> <button>Delete</button> </td>
-        </tr>
-        <tr>
-            <td>Jane</td>
-            <td>67890</td>
-            <td>9.0</td>
-            <td>Electrical Engineering</td>
-            <td> <a href="edit.html"> <button>Edit</button> </a> <button>Delete</button> </td>
-        </tr>
-        <tr>
-            <td>Michael</td>
-            <td>54321</td>
-            <td>7.8</td>
-            <td>Mechanical Engineering</td>
-            <td> <a href="edit.html"> <button>Edit</button> </a> <button>Delete</button> </td>
-        </tr>
-        <tr>
-            <td>Emily</td>
-            <td>98765</td>
-            <td>8.2</td>
-            <td>Civil Engineering</td>
-            <td> <a href="edit.html"> <button>Edit</button> </a> <button>Delete</button> </td>
-        </tr>
-        <tr>
-            <td>David</td>
-            <td>24680</td>
-            <td>8.0</td>
-            <td>Computer Science</td>
-            <td> <a href="edit.html"> <button>Edit</button> </a> <button>Delete</button> </td>
-        </tr>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Roll Number</th>
+                <th>CGPA</th>
+                <th>Branch</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
     </table>
 </body>
+<script>
+const students = JSON.parse(localStorage.getItem('students')) || [];
+const tbody = document.querySelector('tbody');
+students.forEach(student => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+        <td>${student.name}</td>
+        <td>${student.rollNumber}</td>
+        <td>${student.cgpa}</td>
+        <td>${student.branch}</td>
+        <td>
+            <button onclick="editStudent('${student.rollNumber}')">Edit</button>
+            <button onclick="deleteStudent('${student.rollNumber}')">Delete</button>
+        </td>`;
+    tbody.appendChild(tr);
+});
+function editStudent(rollNumber) {
+    const student = students.find(s => s.rollNumber === rollNumber);
+    if (student) {
+        localStorage.setItem('editStudent', JSON.stringify(student));
+        window.location.href = 'edit.html';
+    }
+}
+function deleteStudent(rollNumber) {
+    const index = students.findIndex(s => s.rollNumber === rollNumber);
+    if (index !== -1) {
+        students.splice(index, 1);
+        localStorage.setItem('students', JSON.stringify(students));
+    }
+    location.reload();
+}
+</script>
 </html>

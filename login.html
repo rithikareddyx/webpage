@@ -12,10 +12,23 @@
         <a href="login.html">Login</a>
         <a href="register.html">Register</a>
     </nav><br/><br/>
-    <form action="dashboard.html">
+    <form action="dashboard.html" onsubmit="validateLogin()">
         Username : <input type ="text" name="username" required minlength="4" maxlength="12"><br/><br/>
         Password : <input type="password" name="password" required minlength="4" maxlength="12"><br/><br/>
         <button type="submit">Login</button>
     </form>
 </body>
+<script>
+    function validateLogin() {
+        const form = document.querySelector('form');
+        const username = form.username.value;
+        const password = form.password.value;
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user && user.username === username && user.password === password) {
+            alert('Login successful!');
+        } else {
+            alert('Invalid username or password!');
+        }
+    }
+</script>
 </html>
