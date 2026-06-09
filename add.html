@@ -13,11 +13,11 @@
         <a href="view.html">View Students</a>
         <a href="logout.html">Logout</a>
     </nav><br/><br/>
-    <form action="view.html" onsubmit="validate()">
-    Name : <input type="text" name="name" required minlength="3"><br><br>
-    Roll Number : <input type="text" name="roll_number" required minlength="10" maxlength="10"><br><br>
-    CGPA :<input type="text" name="cgpa" required maxlength="3"><br><br>
-    Branch :<input type="text" name="branch" required minlength="3"><br><br>
+    <form action="view.html" onsubmit="return validate()">
+    Name : <input type="text" name="name"><br><br>
+    Roll Number : <input type="text" name="rollno"><br><br>
+    CGPA :<input type="text" name="cgpa"><br><br>
+    Branch :<input type="text" name="branch"><br><br>
     <button type="submit">Add Student</button>
 </form>
 </body>
@@ -25,13 +25,35 @@
     function validate() {
         const form = document.querySelector('form');
         const name = form.name.value;
-        const rollNumber = form.roll_number.value;
+        const rollno = form.rollno.value;
         const cgpa = form.cgpa.value;
         const branch = form.branch.value;
-        const student = { name, rollNumber, cgpa, branch };
-        let students = JSON.parse(localStorage.getItem("students")) || [];
-        students.push(student);
-        localStorage.setItem("students", JSON.stringify(students));
-    }
+        const nr=/^[A-Za-z]{3,20}$/;
+        const rr=/^\w{10}$/;
+        const cr=/^\d+(\.{1}\d)?$/;
+        const br=/^[A-Z]{3}$/;
+        if (!nr.test(name)) {
+            alert("invalid name");
+            return false;
+            }
+
+        if (!rr.test(rollno)) {
+            alert("invalid rollno");
+            return false;
+        }
+
+        if (!cr.test(cgpa)) {
+            alert("invalid cgpa");
+            return false;
+        }
+
+        if (!br.test(branch)) {
+            alert("invalid branch");
+            return false;
+        }
+        const student = { name, rollno, cgpa, branch };
+        localStorage.setItem("student", JSON.stringify(student));
+        return true;
+        }
 </script>
 </html>

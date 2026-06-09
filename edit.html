@@ -19,35 +19,27 @@
 
 <form id="editForm">
     Name :<input type="text" id="name" required><br><br>
-    Roll Number :<input type="text" id="rno" readonly><br><br>
+    Roll Number :<input type="text" id="rollno" readonly><br><br>
     CGPA :<input type="text" id="cgpa" required><br><br>
     Branch :<input type="text" id="branch" required><br><br>
     <button type="submit">Update Student</button>
 </form>
 <script>
-const student = JSON.parse(localStorage.getItem("editStudent"));
+const student = JSON.parse(localStorage.getItem("student"));
 document.getElementById("name").value = student.name;
-document.getElementById("rno").value = student.rollNumber;
+document.getElementById("rollno").value = student.rollno;
 document.getElementById("cgpa").value = student.cgpa;
 document.getElementById("branch").value = student.branch;
 
 document.getElementById("editForm").addEventListener("submit", function(e) {
-
     e.preventDefault();
-    let students = JSON.parse(localStorage.getItem("students")) || [];
-    const index = students.findIndex(
-        s => s.rollNumber === student.rollNumber
-    );
-    if(index !== -1) {
-
-        students[index].name = document.getElementById("name").value;
-        students[index].cgpa = document.getElementById("cgpa").value;
-        students[index].branch = document.getElementById("branch").value;
-        localStorage.setItem("students", JSON.stringify(students));
-        alert("Student Updated Successfully!");
-        window.location.href = "view.html";
-    }
-
+    student.name = document.getElementById("name").value;
+    student.cgpa = document.getElementById("cgpa").value;
+    student.branch = document.getElementById("branch").value;
+    student.rollno=document.getElementById("rollno").value;
+    localStorage.setItem("student", JSON.stringify(student));
+    alert("Student Updated Successfully!");
+    window.location.href = "view.html";
 });
 
 </script>

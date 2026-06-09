@@ -29,34 +29,23 @@
     </table>
 </body>
 <script>
-const students = JSON.parse(localStorage.getItem('students')) || [];
+const student = JSON.parse(localStorage.getItem('student'));
 const tbody = document.querySelector('tbody');
-students.forEach(student => {
+    if(student){
     const tr = document.createElement('tr');
     tr.innerHTML = `
         <td>${student.name}</td>
-        <td>${student.rollNumber}</td>
+        <td>${student.rollno}</td>
         <td>${student.cgpa}</td>
         <td>${student.branch}</td>
         <td class="actions">
-    <button class="edit-btn" onclick="editStudent('${student.rollNumber}')">Edit</button>
-    <button class="delete-btn" onclick="deleteStudent('${student.rollNumber}')">Delete  </button>
+    <button class="edit-btn" onclick="window.location.href='edit.html'">Edit</button>
+    <button class="delete-btn" onclick="deleteStudent()">Delete  </button>
     </td>`;
     tbody.appendChild(tr);
-});
-function editStudent(rollNumber) {
-    const student = students.find(s => s.rollNumber === rollNumber);
-    if (student) {
-        localStorage.setItem('editStudent', JSON.stringify(student));
-        window.location.href = 'edit.html';
-    }
 }
-function deleteStudent(rollNumber) {
-    const index = students.findIndex(s => s.rollNumber === rollNumber);
-    if (index !== -1) {
-        students.splice(index, 1);
-        localStorage.setItem('students', JSON.stringify(students));
-    }
+function deleteStudent() {
+    localStorage.removeItem("student");
     location.reload();
 }
 </script>
