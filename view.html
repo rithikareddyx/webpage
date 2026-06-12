@@ -29,24 +29,35 @@
     </table>
 </body>
 <script>
-const student = JSON.parse(localStorage.getItem('student'));
-const tbody = document.querySelector('tbody');
-    if(student){
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-        <td>${student.name}</td>
-        <td>${student.rollno}</td>
-        <td>${student.cgpa}</td>
-        <td>${student.branch}</td>
-        <td class="actions">
-    <button class="edit-btn" onclick="window.location.href='edit.html'">Edit</button>
-    <button class="delete-btn" onclick="deleteStudent()">Delete  </button>
-    </td>`;
-    tbody.appendChild(tr);
+async function loadStudents() {
+    const response = await fetch("http://localhost:3000/students");
+    const students = await response.json();
+    const tbody = document.querySelector('tbody');
+    students.forEach(student => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+            <td>${student.name}</td>
+            <td>${student.rollno}</td>
+            <td>${student.cgpa}</td>
+            <td>${student.branch}</td>
+            <td class="actions">
+                <button class="edit-btn" onclick="editStudent('${student.id}')">Edit</button>
+                <button class="delete-btn" onclick="deleteStudent('${student.id}')">Delete</button>
+            </td>`;
+        tbody.appendChild(tr);
+    });
 }
-function deleteStudent() {
-    localStorage.removeItem("student");
+
+async function editStudent(id) {
+    window.location.href = "edit.html?id="+ id;
+}
+
+async function deleteStudent(id) {
+    await fetch("http://localhost:3000/students/" + id, {
+        method: "DELETE"
+    });
     location.reload();
 }
+loadStudents();
 </script>
 </html>

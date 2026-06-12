@@ -12,22 +12,23 @@
         <a href="login.html">Login</a>
         <a href="register.html">Register</a>
     </nav><br/><br/>
-    <form action="dashboard.html" onsubmit="validateLogin()">
-        Username : <input type ="text" name="username" required minlength="4" maxlength="12"><br/><br/>
-        Password : <input type="password" name="password" required minlength="4" maxlength="12"><br/><br/>
+    <form onsubmit="validateLogin(event)">
+        Username : <input type ="text" id="username" required ><br/><br/>
+        Password : <input type="password" id="password" required><br/><br/>
         <button type="submit">Login</button>
     </form>
 </body>
 <script>
-    function validateLogin() {
-        const form = document.querySelector('form');
-        const username = form.username.value;
-        const password = form.password.value;
-        const user = JSON.parse(localStorage.getItem('user'));
-        if (user && user.username === username && user.password === password) {
-            alert('Login successful!');
-        } else {
-            alert('Invalid username or password!');
+    async function validateLogin(event) {
+        event.preventDefault();
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const response = await fetch("http://localhost:3000/users");
+        const users = await response.json();
+        if (users.some(user=>user.username === username && user.password === password)) {
+            window.location.href = "dashboard.html";
+        }else {
+            alert('Invalid username or password');
         }
     }
 </script>
